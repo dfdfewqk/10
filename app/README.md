@@ -55,3 +55,14 @@ ChatGPT에서 작성·실행한 Playwright/Chromium 자동 테스트 7개 통과
 
 ### 검사 기록
 2026-10-28에 GitHub의 `app/index.html`, `app/README.md` 현재 버전을 대상으로 이메일, 한국 휴대전화 번호, 인증 토큰/키 대표 패턴, PRIVATE KEY 블록, `api_key` / `client_secret` / `password` 등 비밀값 사용 흔적을 확인했습니다. 해당 검사에서 실제 개인정보 또는 비밀값은 발견되지 않았습니다. 공개 논문 원문 `index.html`에서도 이메일·전화번호·대표 키 패턴 일치 항목은 발견되지 않았습니다. 이 검사는 현재 파일 기준이며 Git 전체 과거 이력과 모든 가능한 비밀 형식을 보증하는 포괄적 보안 감사는 아닙니다.
+
+
+## 4단계: 공개 URL 및 새 폴더 실행 (BRB-C08, BRB-C09)
+
+- **공개 URL:** https://t10-geofield-paper.vercel.app/app/
+- **실행 묶음:** `GeoField_BRB_Stage4.zip` (`index.html`, `README.md`, `VERIFY.md`)
+- **오프라인 실행:** ZIP을 새 폴더에 모두 압축 해제한 다음 `index.html`을 Chrome/Edge에서 더블클릭합니다. 설치·로그인·API 키·서버 실행 불필요.
+- **테스트 내용:** 새 임시 폴더에 HTML과 README를 복사한 뒤 Chromium 격리 컨텍스트에서 HTML을 로드하여 첫 화면, 하중 선택, 홀 변경, 변위 비교, 메시 전환, 잘못된 입력, 모바일 화면 등 기능 확인 10개 통과. Node.js JavaScript 문법 검사도 통과.
+- **동일 소스:** ZIP의 `index.html`은 저장소 `app/index.html`과 동일한 Git blob(`4a19a2c5b67dc68b66111d9e0b8654140adbc24f`)입니다.
+- **검증의 한계:** 이 실행 환경의 Chromium은 `file://` 직접 탐색이 `ERR_BLOCKED_BY_ADMINISTRATOR`로 제한됩니다. 외부 사이트 DNS 접근도 차단되어 실제 시크릿 창에서 공개 URL을 성공적으로 열었는지는 확인하지 못했습니다. Vercel의 production 상태가 READY이고 비밀번호·SSO 보호가 없다는 사실과 사용자 컴퓨터에서의 실제 접속 성공은 구별합니다.
+- **사용자가 확인할 방법:** Chrome/Edge 새 시크릿 창에서 위 URL 접속, 또는 별도 임시 폴더에 ZIP을 풀고 `index.html` 더블클릭 후 세 가지 동작을 수행합니다.
